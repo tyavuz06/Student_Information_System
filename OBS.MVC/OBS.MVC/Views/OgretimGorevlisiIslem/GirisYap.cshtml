@@ -1,0 +1,41 @@
+﻿@model OBS.MVC.Models.ViewModels.NUyeGiris
+@{
+    ViewBag.Title = "Öğretim Görevlisi Girişi";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("GirisYap", "OgretimGorevlisiIslem", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Lütfen kullanıcı bilgilerinizi yazınız.</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.KullaniciAd, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.KullaniciAd, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.KullaniciAd)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Sifre, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Sifre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Sifre)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Giriş Yap" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

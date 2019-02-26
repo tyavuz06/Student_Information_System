@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OBS.MVC.Models.Bolum>
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = ViewBag.Donem;
+}
+
+<h2>@ViewBag.Donem</h2>
+
+<p>
+    @Html.ActionLink("Ders Ekle", "DonemDersEkle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fakulte.Ad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fakulte.Ad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ad)
+        </td>
+        <td>
+            <a href="../../Dersler/DonemDersListesi/@(ViewContext.RouteData.Values["id"])/@(item.Id)">Dönemdeki Dersler</a>
+        </td>
+    </tr>
+}
+
+</table>

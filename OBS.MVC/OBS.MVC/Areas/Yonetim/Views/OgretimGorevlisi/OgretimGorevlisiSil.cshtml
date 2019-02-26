@@ -1,0 +1,89 @@
+﻿@model OBS.MVC.Models.OgretimGorevlisi
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Öğretim Görevlisini Sil";
+}
+
+<h2>Öğretim Görevlisini Sil</h2>
+
+<h3>Bu öğretim görevlisini silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>OgretimGorevlisi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bolum.Ad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bolum.Ad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Soyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Soyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KimlikNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KimlikNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EPosta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EPosta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogumTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogumTarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GirisTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GirisTarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CikisTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CikisTarih)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Bölümün Öğretim Görevlisi Listesine Dön", "BolumunOgretimGorevlileri", new { id = Model.BolumId })
+        </div>
+    }
+</div>

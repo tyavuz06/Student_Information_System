@@ -1,0 +1,51 @@
+﻿@model OBS.MVC.Models.Donem
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Dönem Düzenle";
+}
+
+<h2>Dönem Düzenle</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Dönem Bilgisi</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Yil, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Yil)
+                @Html.ValidationMessageFor(model => model.Yil)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DonemTip, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DonemTip, (IEnumerable<SelectListItem>)ViewBag.Donemler)
+                @Html.ValidationMessageFor(model => model.DonemTip)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Dönem Listesine Dön", "DonemListesi")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

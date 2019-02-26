@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OBS.MVC.Models.ViewModels.NDonemDers>
+
+@{
+    Layout = "~/Views/Shared/_LayoutOgretimGorevlisi.cshtml";
+    ViewBag.Title = "Dersler";
+}
+
+<h2>Dersler</h2>
+@{
+    var dersler = Model;
+    List<OBS.MVC.Models.ViewModels.NDersDonem> donemler = ViewBag.Donemler;
+    
+foreach (var donem in donemler)
+{
+    var donemdekiDersler = (from d in dersler
+                            where d.DonemId == donem.Id
+                            select d).ToList();
+    if (donemdekiDersler.Count > 0)
+    {
+        <h4>@(donem.Yil + " " + donem.DonemAd + " Dersleri")</h4>
+        
+    <table class="table">
+            <tr>
+                <th>
+                    Ders Adı
+                </th>
+                <th>
+                    Dönem
+                </th>
+                <th></th>
+            </tr>
+        @foreach (var item in donemdekiDersler)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ad)
+                </td>
+                <td>
+                    @(item.Yil + " " + item.DonemAd + " Dönemi")
+                </td>
+                <td>
+                    @Html.ActionLink("Öğrenciler", "DersOgrenciListe", new { id = item.Id })
+                </td>
+            </tr>
+        }
+        </table>
+}
+    }
+}

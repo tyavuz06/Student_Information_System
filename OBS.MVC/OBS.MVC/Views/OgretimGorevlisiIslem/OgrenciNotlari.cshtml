@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutOgretimGorevlisi.cshtml";
+    ViewBag.Title = "OgrenciNotlari";
+}
+<h2>OgrenciNotlari</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("[name='btKaydet']").click(function () {
+            $.id = $(this).prop("id");
+            $.satir = $(this).parents("tr:first"); //Butonun içinde bulunduğu satırı (tr) alıyoruz.
+            $.vize1 = $.satir.find("[name='Vize1']").val();
+            $.vize2 = $.satir.find("[name='Vize2']").val();
+            $.final = $.satir.find("[name='Final']").val();
+
+            $.veri = { "Id": $.id, "Vize1": $.vize1, "Vize2": $.vize2, "Final": $.final };
+            $.ajax({
+                url: '@Url.Action("DersNotKaydet")',
+                data: $.veri,
+                dataType: "json",
+                method: "POST",
+                success: function (veri) {
+                    if (veri == "Basarili") {
+                        alert("Notlar güncellendi");
+                    }
+                    else
+                        alert(veri);
+                }
+            });
+        });
+    });
+</script>
+@{
+    var grid = new WebGrid(Model);
+}
+<h2>@ViewBag.Ders</h2>
+
+@grid.GetHtml(
+    tableStyle:"table",
+    columns: grid.Columns(
+    grid.Column(format: @<input type='hidden' name='id' value='@item.Id' />),
+    grid.Column("Ad Soyad", format: @<text><label id="AdSoyad" class="edit-mode">@item.AdSoyad</label></text>, style: "col1Width" ),
+    grid.Column("Vize1", "1. Vize", format: @<text><input type="text" name="Vize1" value="@item.Vize1" class="edit-mode" /></text>, style: "col2Width"),
+    grid.Column("Vize2", "2. Vize", format: @<text><input type="text" name="Vize2" value="@item.Vize2" class="edit-mode" /></text>, style: "col2Width"),
+    grid.Column("Final", "Final", format: @<text><input type="text" name="Final" value="@item.Final" class="edit-mode" /></text>, style: "col2Width"),
+    grid.Column("Ortalama", format: @<text><label id="Ortalama" class="edit-mode">@item.Ortalama</label></text>, style: "col1Width" ),
+    grid.Column("Butonlar", format: 
+        @<text>
+            <button class="edit-book display-mode" name="btKaydet" id="@item.Id">Kaydet</button>
+        </text>, 
+        style: "col1Width" )
+        )
+    )

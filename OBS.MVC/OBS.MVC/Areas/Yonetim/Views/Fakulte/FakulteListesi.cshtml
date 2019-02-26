@@ -1,0 +1,35 @@
+﻿@model IEnumerable<OBS.MVC.Models.Fakulte>
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Fakülte Listesi";
+}
+
+<h2>Fakülte Listesi</h2>
+
+<p>
+    @Html.ActionLink("Fakülte Ekle", "FakulteEkle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ad)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "FakulteDuzenle", new { id=item.Id }) |
+            @Html.ActionLink("Detay", "FakulteDetay", new { id=item.Id }) |
+            @Html.ActionLink("Sil", "FakulteSil", new { id=item.Id }) | 
+            @Html.ActionLink("Bölümler", "FakulteninBolumleri", "Bolum", new { id = item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>

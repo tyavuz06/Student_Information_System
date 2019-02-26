@@ -1,0 +1,41 @@
+﻿@model OBS.MVC.Models.Donem
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Dönem Sil";
+}
+
+<h2>Dönem Sil</h2>
+
+<h3>Bu dönemi silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>Dönem Bilgisi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Yil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonemTip)
+        </dt>
+
+        <dd>
+            @OBS.MVC.Helpers.EnumHelper.GetirDonemAdi(Model.DonemTip)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Dönem Listesine Dön", "DonemListesi")
+        </div>
+    }
+</div>

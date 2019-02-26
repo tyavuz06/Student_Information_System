@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutOgrenci.cshtml";
+    ViewBag.Title = "DersSecim";
+}
+
+<h2>Ders Seçimi</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='btEkle']").click(function () {
+            $.id = $(this).parent().parent()[0].children[0].children[0].value;
+            $.ajax({
+                url: '@Url.Action("DersEkle")',
+                data: { "id": $.id },
+                dataType: "json",
+                method: "POST",
+                success: function (veri) {
+                    if (veri == "Basarili") {
+                        location.reload();
+                    }
+                    else
+                        alert(veri);
+                }
+            });
+        });
+        $("input[name='btCikar']").click(function () {
+            $.id = $(this).parent().parent()[0].children[0].children[0].value;
+            $.ajax({
+                url: '@Url.Action("DersSil")',
+                data: { "id": $.id },
+                dataType: "json",
+                method: "POST",
+                success: function (veri) {
+                    if (veri == "Basarili") {
+                        location.reload();
+                    }
+                    else
+                        alert(veri);
+                }
+            });
+        });
+    });
+</script>
+<style type="text/css">
+    .sutun{ width: 400px; }
+</style>
+
+@{
+    var gridDersler = new WebGrid(ViewBag.Dersler);
+    var gridSecilenDersler = new WebGrid(ViewBag.SecilenDersler);
+}
+<h2>Açık Dersler</h2>
+<div>
+    @gridDersler.GetHtml( tableStyle:"table",
+    columns: gridDersler.Columns(
+        gridDersler.Column(format: @<input type='hidden' name='id' value='@item.Id' />),
+                    gridDersler.Column("Ad", "Ders Adı", style: "sutun"),
+                    gridDersler.Column("OgretimGorevlisiAd", "Öğretim Görevlisi", style: "sutun"),
+                    gridDersler.Column(format: @<input type="button" name="btEkle" value="Ekle" />)
+        )
+    )
+</div>
+
+<h2>Seçilen Dersler</h2>
+<div>
+    @gridSecilenDersler.GetHtml(tableStyle: "table",
+    columns: gridDersler.Columns(
+                    gridDersler.Column(format: @<input type='hidden' name='id' value='@item.Id' />),
+                    gridDersler.Column("Ad", "Ders Adı", style: "sutun"),
+                    gridDersler.Column("OgretimGorevlisiAd", "Öğretim Görevlisi", style: "sutun"),
+                    gridDersler.Column(format: @<input type="button" name="btCikar" value="Çıkar" />)
+            )
+        )
+</div>

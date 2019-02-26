@@ -1,0 +1,135 @@
+﻿@model OBS.MVC.Models.OgretimGorevlisi
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Öğretim Görevlisi Ekle";
+}
+
+<h2>Öğretim Görevlisi Ekle</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.fakulteId = $("#FakulteId").val();
+        GetirBolumler($.fakulteId);
+        $("#FakulteId").change(function () {
+            $.fakulteId = $(this).val();
+            GetirBolumler();
+        });
+    });
+    function GetirBolumler(fakulteId) {
+        $("#BolumId").empty();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("FakulteninBolumleriJson","Bolum")',
+            data: { id: $.fakulteId },
+            dataType: "json",
+            success: function (bolumler) {
+                $.each(bolumler, function (index, bolum) {
+                    $("#BolumId").append("<option value=" + bolum.Id + ">" + bolum.Ad + "</option>");
+                });
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Öğretim Görevlisi Bilgisi</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ad)
+                @Html.ValidationMessageFor(model => model.Ad)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Soyad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Soyad)
+                @Html.ValidationMessageFor(model => model.Soyad)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KimlikNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KimlikNo)
+                @Html.ValidationMessageFor(model => model.KimlikNo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EPosta, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EPosta)
+                @Html.ValidationMessageFor(model => model.EPosta)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DogumTarih, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DogumTarih)
+                @Html.ValidationMessageFor(model => model.DogumTarih)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GirisTarih, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GirisTarih)
+                @Html.ValidationMessageFor(model => model.GirisTarih)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CikisTarih, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CikisTarih)
+                @Html.ValidationMessageFor(model => model.CikisTarih)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Fakülte</label>
+            <div class="col-md-10">
+                <select id="FakulteId">
+                    @foreach (SelectListItem fakulte in (IEnumerable<SelectListItem>)ViewBag.Fakulteler)
+                    {
+                        <option value="@fakulte.Value">@fakulte.Text</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.BolumId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BolumId, "BolumId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="BolumId" name="BolumId"></select>
+                @Html.ValidationMessageFor(model => model.BolumId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Öğretim Görevlisi Listesine Dön", "OgretimGorevlisiListesi")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,83 @@
+﻿@model OBS.MVC.Models.OgretimGorevlisi
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Öğretim Görevlisi Detayı";
+}
+
+<h2>Öğretim Görevlisi Detayı</h2>
+
+<div>
+    <h4>Öğretim Görevlisi Bilgisi</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bolum.Ad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bolum.Ad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Soyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Soyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KimlikNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KimlikNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EPosta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EPosta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogumTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogumTarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GirisTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GirisTarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CikisTarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CikisTarih)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "OgretimGorevlisiDuzenle", new { id = Model.Id }) |
+    @Html.ActionLink("Bölümün Öğretim Görevlisi Listesine Dön", "BolumunOgretimGorevlileri", new { id = Model.BolumId })
+</p>

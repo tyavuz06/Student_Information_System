@@ -1,0 +1,76 @@
+﻿@model IEnumerable<OBS.MVC.Models.Ogrenci>
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Öğrenci Listesi";
+}
+
+<h2>Öğrenci Listesi</h2>
+
+<p>
+    @Html.ActionLink("Öğrenci Ekle", "OgrenciEkle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bolum.Ad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Soyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KimlikNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EPosta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DogumTarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GirisTarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CikisTarih)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bolum.Ad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Soyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KimlikNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EPosta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DogumTarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GirisTarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CikisTarih)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "OgrenciDuzenle", new { id = item.Id }) |
+            @Html.ActionLink("Detay", "OgrenciDetay", new { id = item.Id }) |
+            @Html.ActionLink("Sil", "OgrenciSil", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

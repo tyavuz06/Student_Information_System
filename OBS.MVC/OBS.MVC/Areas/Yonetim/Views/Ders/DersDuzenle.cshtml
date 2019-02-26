@@ -1,0 +1,104 @@
+﻿@model OBS.MVC.Models.Ders
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Ders Düzenle";
+}
+
+<h2>Ders Düzenle</h2>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.fakulteId = $("#FakulteId").val();
+        GetirBolumler($.fakulteId, true);
+        $("#FakulteId").change(function () {
+            $.fakulteId = $(this).val();
+            GetirBolumler($.fakulteId, false);
+        });
+    });
+    function GetirBolumler(fakulteId, ilkSecimMi) {
+        $("#BolumId").empty();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("FakulteninBolumleriJson","Bolum")',
+            data: { id: $.fakulteId },
+            dataType: "json",
+            success: function (bolumler) {
+                $.each(bolumler, function (index, bolum) {
+                    $.secenek = "<option value=" + bolum.Id;
+                    if(ilkSecimMi == true && bolum.Id == "@Model.BolumId") {
+                        $.secenek += " selected='selected' ";
+                    }
+                    $.secenek += ">" + bolum.Ad + "</option>";
+                    $("#BolumId").append($.secenek);
+                });
+            }
+        });
+    }
+</script>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Ders Bilgisi</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ad)
+                @Html.ValidationMessageFor(model => model.Ad)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kod, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kod)
+                @Html.ValidationMessageFor(model => model.Kod)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Fakülte</label>
+            <div class="col-md-10">
+                <select id="FakulteId">
+                    @foreach (OBS.MVC.Models.ViewModels.NSelectListItem fakulte in (List<OBS.MVC.Models.ViewModels.NSelectListItem>)ViewBag.Fakulteler)
+                    {
+                        <option value="@fakulte.Value" @(fakulte.Selected ? "selected='selected'" : "")>@fakulte.Text</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.BolumId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BolumId, "BolumId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="BolumId" name="BolumId"></select>
+                @Html.ValidationMessageFor(model => model.BolumId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Bölümün Ders Listesine Dön", "BolumunDersleri", new { id = Model.BolumId })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

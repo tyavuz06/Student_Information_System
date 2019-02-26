@@ -1,0 +1,45 @@
+﻿@model OBS.MVC.Models.DonemDers
+@{Layout = "../Shared/_Layout.cshtml";}
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Ders Ekle</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DersId, "DersId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DersId, (IEnumerable<SelectListItem>)ViewBag.Dersler)
+                @Html.ValidationMessageFor(model => model.DersId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OgretimGorevlisiId, "OgretimGorevlisiId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.OgretimGorevlisiId, (IEnumerable<SelectListItem>)ViewBag.OgretimGorevlileri)
+                @Html.ValidationMessageFor(model => model.OgretimGorevlisiId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="../../DonemDersListesi/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])">Bölümün Bu Dönemki Ders Listesine Dön</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

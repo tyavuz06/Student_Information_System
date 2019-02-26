@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutOgrenci.cshtml";
+    ViewBag.Title = "Transkript";
+}
+<h2>Transkript</h2>
+
+@{
+    List<OBS.MVC.Models.ViewModels.NDersNotlu> dersler = Model;
+    List<OBS.MVC.Models.ViewModels.NDersDonem> donemler = ViewBag.Donemler;
+    if (donemler.Count > 0) 
+    { 
+        foreach (var donem in donemler)
+        {
+            var donemdekiDersler = (from d in dersler
+                                    where d.DonemId == donem.Id
+                                    select d).ToList();
+            if (donemdekiDersler.Count > 0)
+            {
+                <h4>@(donem.Yil + " " + donem.DonemAd + " Dersleri")</h4>
+            
+                WebGrid grid = new WebGrid(donemdekiDersler);
+                @grid.GetHtml(tableStyle: "table",
+                    columns: grid.Columns(
+                        grid.Column("Ad", "Ders Adı"),
+                        grid.Column("OgretimGorevlisiAd", "Öğretim Görevlisi"),
+                        grid.Column("Vize1", "1. Vize"),
+                        grid.Column("Vize2", "2. Vize"),
+                        grid.Column("Final", "Final"),
+                        grid.Column("Ortalama", "Ortalama"),
+                        grid.Column("BasariDurum", "Başarı Durumu")
+                    )
+                )
+            }
+        }
+    }
+}

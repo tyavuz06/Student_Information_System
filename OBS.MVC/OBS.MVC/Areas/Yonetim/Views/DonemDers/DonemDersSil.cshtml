@@ -1,0 +1,48 @@
+﻿@model OBS.MVC.Models.DonemDers
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "DonemDersSil";
+}
+
+<h2>DonemDersSil</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DonemDers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ders
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ders.Ad)
+        </dd>
+
+        <dt>
+            Dönem
+        </dt>
+
+        <dd>
+            @(Model.Donem.Yil + " " + OBS.MVC.Helpers.EnumHelper.GetirDonemAdi(Model.Donem.DonemTip) + " Dönemi")
+        </dd>
+
+        <dt>
+            Öğretim Görevlisi
+        </dt>
+
+        <dd>
+            @(Model.OgretimGorevlisi.Ad + " " + Model.OgretimGorevlisi.Soyad)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            <a href="../../../DonemDersListesi/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])">Bölümün Bu Dönemki Ders Listesine Dön</a>
+        </div>
+    }
+</div>

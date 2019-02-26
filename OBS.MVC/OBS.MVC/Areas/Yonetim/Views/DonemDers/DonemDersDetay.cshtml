@@ -1,0 +1,43 @@
+﻿@model OBS.MVC.Models.DonemDers
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Dönemde Açılan Ders Detayı";
+}
+
+<h2>Dönemde Açılan Ders Detayı</h2>
+
+<div>
+    <h4>Ders Bilgileri</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ders
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ders.Ad)
+        </dd>
+
+        <dt>
+            Dönem
+        </dt>
+
+        <dd>
+            @(Model.Donem.Yil + " " + OBS.MVC.Helpers.EnumHelper.GetirDonemAdi(Model.Donem.DonemTip) + " Dönemi")
+        </dd>
+
+        <dt>
+            Öğretim Görevlisi
+        </dt>
+
+        <dd>
+            @(Model.OgretimGorevlisi.Ad + " " + Model.OgretimGorevlisi.Soyad)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="../../../DonemDersDuzenle/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])/@(Model.Id)">Düzenle</a>
+    <a href="../../../DonemDersListesi/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])">Bölümün Bu Dönemki Ders Listesine Dön</a>
+</p>

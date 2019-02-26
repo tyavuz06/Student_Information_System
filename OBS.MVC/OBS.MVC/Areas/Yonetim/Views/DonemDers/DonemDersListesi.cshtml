@@ -1,0 +1,46 @@
+﻿@model IEnumerable<OBS.MVC.Models.DonemDers>
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Dönemdeki Dersler";
+}
+
+<h2>Dönemdeki Dersler</h2>
+
+<p>
+    <a href="../../DonemDersEkle/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])">Ders Ekle</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Ders
+        </th>
+        <th>
+            Dönem
+        </th>
+        <th>
+            Öğretim Görevlisi
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ders.Ad)
+        </td>
+        <td>
+            @(item.Donem.Yil + " " + OBS.MVC.Helpers.EnumHelper.GetirDonemAdi(item.Donem.DonemTip) + " Dönemi")
+        </td>
+        <td>
+            @(item.OgretimGorevlisi.Ad + " " + item.OgretimGorevlisi.Soyad)
+        </td>
+        <td>
+            <a href="../../DonemDersDuzenle/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])/@(item.Id)">Düzenle</a> | 
+            <a href="../../DonemDersDetay/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])/@(item.Id)">Detay</a> |
+            <a href="../../DonemDersSil/@(ViewContext.RouteData.Values["donemid"])/@(ViewContext.RouteData.Values["bolumid"])/@(item.Id)">Sil</a>
+        </td>
+    </tr>
+}
+
+</table>

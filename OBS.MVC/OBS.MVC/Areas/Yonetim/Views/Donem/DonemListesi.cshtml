@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OBS.MVC.Models.Donem>
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Dönem Listesi";
+}
+
+<h2>Dönem Listesi</h2>
+
+<p>
+    @Html.ActionLink("Dönem Ekle", "DonemEkle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Yil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DonemTip)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Yil)
+        </td>
+        <td>
+            @OBS.MVC.Helpers.EnumHelper.GetirDonemAdi(item.DonemTip)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "DonemDuzenle", new { id=item.Id }) |
+            @Html.ActionLink("Detay", "DonemDetay", new { id=item.Id }) |
+            @Html.ActionLink("Sil", "DonemSil", new { id=item.Id }) | 
+            @Html.ActionLink("Dersler", "BolumListesi", "DonemDers", new { id = item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>
